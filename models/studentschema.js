@@ -6,10 +6,12 @@ const studentscheman = new mongoose.Schema({
     type: String,
     require: true,
   },
-  class: {
-    type: String,
-    require: true,
-  },
+  class: [
+    {
+      type: mongoose.Types.ObjectId,
+      ref: "classSchema",
+    },
+  ],
   section: {
     type: String,
     require: true,
@@ -19,8 +21,8 @@ const studentscheman = new mongoose.Schema({
     require: true,
   },
   rollnumber: {
-    type: String,
-    require: true,
+    type: Number,
+    // require: true,
   },
   email: {
     type: String,

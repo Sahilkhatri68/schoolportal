@@ -14,9 +14,13 @@ app.get("/", (req, res) => {
   });
 });
 
+// api to get class
+app.use("/api/getclass", require("./routes/classRoute"));
+// api to add class
+app.use("/api/addnewclass", require("./routes/classRoute"));
 // api to get all user
 app.use("/api/getallstudent", require("./routes/addstudent"));
-app.use("/api/register", require("./routes/addstudent"));
+app.use("/api/registerStudent", require("./routes/addstudent"));
 
 app.listen(PORT, () => {
   console.log(`server is running http://localhost:${PORT}`);
