@@ -8,6 +8,9 @@ const classSchema = new mongoose.Schema({
   classID: {
     type: Number,
   },
+  duration: {
+    type: String,
+  },
   classStudents: [
     {
       type: mongoose.Types.ObjectId,

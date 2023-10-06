@@ -2,12 +2,19 @@ const express = require("express");
 const app = express();
 app.use(express.json());
 const PORT = 4000;
+const cors = require("cors");
 
 // code for connection with DB----
 const connectDb = require("./config/dbconn");
 connectDb();
 // code end for connection with DB----
-
+const allowedOrigins = ["http://localhost:3000"];
+app.use(
+  cors({
+    origin: allowedOrigins,
+    credentials: true,
+  })
+);
 app.get("/", (req, res) => {
   res.json({
     message: "School server is running properly....",

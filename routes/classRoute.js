@@ -2,14 +2,25 @@ const express = require("express");
 const router = express.Router();
 const classSchema = require("../models/classSchema");
 
+// code to get all classes
 router.get("/", async (req, res) => {
   try {
-    const classfind = await classSchema.find().populate([
+    const classfind = await classSchema.find();
+    res.json(classfind);
+  } catch (error) {
+    res.status(400).json({ message: error.message, status: "error" });
+  }
+});
+
+// code to get classes with there students
+router.get("/getclassbystudent", async (req, res) => {
+  try {
+    const classfindstd = await classSchema.find().populate([
       {
         path: "classStudents",
       },
     ]);
-    res.json(classfind);
+    res.json(classfindstd);
   } catch (error) {
     res.status(400).json({ message: error.message, status: "error" });
   }
@@ -25,6 +36,7 @@ router.post("/", async (req, res) => {
     className: req.body.className,
     classID: classIDgenerator,
     classStudents: req.body.classStudents,
+    duration: req.body.duration,
   });
 
   try {
