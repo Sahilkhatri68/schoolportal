@@ -8,7 +8,10 @@ const cors = require("cors");
 const connectDb = require("./config/dbconn");
 connectDb();
 // code end for connection with DB----
-const allowedOrigins = ["http://localhost:3000"];
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://schoolportal-frontend.vercel.app",
+];
 app.use(
   cors({
     origin: allowedOrigins,
