@@ -31,6 +31,9 @@ app.use("/api/postadmin", require("./routes/AdminReg"));
 
 // api to admin login
 app.use("/api/login", require("./routes/Login"));
+
+// api to logout
+app.use("/api/adminlogout", require("./routes/Logout"));
 // api to get class
 app.use("/api/getclass", require("./routes/classRoute"));
 // api to add class
