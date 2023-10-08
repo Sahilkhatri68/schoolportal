@@ -24,6 +24,13 @@ app.get("/", (req, res) => {
   });
 });
 
+// api to get admin
+app.use("/api/getadmin", require("./routes/AdminReg"));
+// api to post admin
+app.use("/api/postadmin", require("./routes/AdminReg"));
+
+// api to admin login
+app.use("/api/login", require("./routes/Login"));
 // api to get class
 app.use("/api/getclass", require("./routes/classRoute"));
 // api to add class
