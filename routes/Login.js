@@ -42,35 +42,8 @@ router.post("/", async (req, res) => {
       secure: true,
     });
 
-    // // // set localstorage
-    // res.locals.fetchedAdmin = {
-    //   id: admin._id,
-    //   email: admin.adminEmail,
-    //   token: token,
-    //   Headers: {
-    //     token: token,
-    //   },
-    // };
-
     res.setHeader("x-auth-token", token);
     // res.cookie("auth_token", token);
-
-    // // cookies
-    // res.cookie("token", token, {
-    //   httpOnly: true,
-    //   maxAge: 1000 * 60 * 60 * 24 * 30,
-    //   sameSite: "none",
-    //   secure: true,
-    // });
-
-    // // set localstorage
-    // res.locals.fetchedAdmin = {
-    //   id: admin._id,
-    //   adminEmail: admin.adminEmail,
-    //   Headers: {
-    //     token: token,
-    //   },
-    // };
 
     res.status(200).json({
       message: "login success",
@@ -86,8 +59,10 @@ router.post("/", async (req, res) => {
 // check user is login or not
 router.get("/check_have_token", (req, res) => {
   try {
-    let token = req.cookies.token || req.headers.token;
+    // let token = req.cookies.token || req.headers.token;
     // console.log(token);
+    let token = req.cookies["auth_token"] || req.headers["x-auth-token"];
+
     const have_valid_token = jwt.verify(token, process.env.JWT_SECRET);
 
     // get user if from token
