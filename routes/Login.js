@@ -77,7 +77,6 @@ router.get("/check_have_token", (req, res) => {
     }
   } catch (error) {
     res.json(error);
-    console.log(error);
   }
 });
 
