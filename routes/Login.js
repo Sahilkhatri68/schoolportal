@@ -10,7 +10,6 @@ router.use(cookiParser());
 router.post("/", async (req, res) => {
   try {
     const { adminEmail, password } = req.body;
-    // console.log(req.body);
     const fetchedAdmin = await admin.findOne({ adminEmail }).lean();
     if (!fetchedAdmin)
       return res
@@ -30,28 +29,48 @@ router.post("/", async (req, res) => {
     // token
     const token = jwt.sign(
       {
-        id: admin._id,
-        adminEmail: admin.adminEmail,
+        id: fetchedAdmin._id,
+        adminEmail: fetchedAdmin.adminEmail,
       },
       process.env.JWT_SECRET
     );
 
-    // cookies
-    res.cookie("token", token, {
+    res.cookie("auth_token", token, {
       httpOnly: true,
-      maxAge: 1000 * 60 * 60 * 24 * 30,
+      maxAge: 1000 * 60 * 60 * 24 * 300,
       sameSite: "none",
       secure: true,
     });
 
-    // set localstorage
-    res.locals.fetchedAdmin = {
-      id: admin._id,
-      adminEmail: admin.adminEmail,
-      Headers: {
-        token: token,
-      },
-    };
+    // // // set localstorage
+    // res.locals.fetchedAdmin = {
+    //   id: admin._id,
+    //   email: admin.adminEmail,
+    //   token: token,
+    //   Headers: {
+    //     token: token,
+    //   },
+    // };
+
+    res.setHeader("x-auth-token", token);
+    // res.cookie("auth_token", token);
+
+    // // cookies
+    // res.cookie("token", token, {
+    //   httpOnly: true,
+    //   maxAge: 1000 * 60 * 60 * 24 * 30,
+    //   sameSite: "none",
+    //   secure: true,
+    // });
+
+    // // set localstorage
+    // res.locals.fetchedAdmin = {
+    //   id: admin._id,
+    //   adminEmail: admin.adminEmail,
+    //   Headers: {
+    //     token: token,
+    //   },
+    // };
 
     res.status(200).json({
       message: "login success",
@@ -61,6 +80,50 @@ router.post("/", async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({ message: error.message, status: "error" });
+  }
+});
+
+// check user is login or not
+router.get("/check_have_token", (req, res) => {
+  try {
+    let token = req.cookies.token || req.headers.token;
+    // console.log(token);
+    const have_valid_token = jwt.verify(token, process.env.JWT_SECRET);
+
+    // get user if from token
+    const id_from_token = have_valid_token.id;
+
+    // check same id have database
+    const user_id = admin.findById(id_from_token);
+    if (user_id === undefined) {
+      res.status(400).json(false);
+    } else {
+      res.status(200).json(true);
+    }
+  } catch (error) {
+    res.json(error);
+    console.log(error);
+  }
+});
+
+// check token id is same with user id
+router.get("/checkLogin", (req, res) => {
+  try {
+    let token = req.cookies.token || req.headers.token;
+
+    const have_valid_token = jwt.verify(token, process.env.JWT_SECRET);
+    // get user id from token
+    const id_from_token = have_valid_token.id;
+
+    // check same id have same database
+    const user_id = admin.findById(id_from_token);
+    if (user_id == undefined) {
+      res.json(false);
+    } else {
+      res.json(true);
+    }
+  } catch (error) {
+    res.json(false);
   }
 });
 
