@@ -16,8 +16,8 @@ router.post("/", async (req, res) => {
         .status(400)
         .json({ message: "Admin Email is wrong ", status: "warning" });
 
-    console.log("Fetched Email : " + fetchedAdmin.adminEmail);
-    console.log("Fetched Password :  " + fetchedAdmin.password);
+    // console.log("Fetched Email : " + fetchedAdmin.adminEmail);
+    // console.log("Fetched Password :  " + fetchedAdmin.password);
 
     const hash_psw = fetchedAdmin.password;
 

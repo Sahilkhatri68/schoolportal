@@ -6,7 +6,7 @@ const studentdata = require("../models/studentschema");
 router.get("/", async (req, res) => {
   try {
     const student = await studentdata.find();
-    const totalStudent = student.length;
+    // const totalStudent = student.length;
     res.json(student);
   } catch (error) {
     console.log("Error in getting student ", error);
@@ -45,7 +45,7 @@ router.post("/", async (req, res) => {
   const student = new studentdata({
     name: req.body.name,
     class: req.body.class,
-    section: req.body.section,
+    email: req.body.email,
     age: req.body.age,
     rollnumber: newRollNumber,
     password: req.body.password,

@@ -14,7 +14,7 @@ const studentscheman = new mongoose.Schema({
   ],
   section: {
     type: String,
-    require: true,
+    // require: true,
   },
   age: {
     type: String,
@@ -46,7 +46,7 @@ const studentscheman = new mongoose.Schema({
   },
   academicResult: {
     type: String,
-    require: false,
+    // require: false,
   },
   joindate: {
     type: Date,
