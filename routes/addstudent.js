@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const studentdata = require("../models/studentschema");
-
+const classSchema = require("../models/classSchema");
 // code to get all students
 router.get("/", async (req, res) => {
   try {
@@ -61,6 +61,19 @@ router.post("/", async (req, res) => {
       status: "success",
       data: student,
     });
+    // code to update class
+    const classId = req.body.class;
+    const updateClasswithStudent = await classSchema.updateOne(
+      { _id: classId },
+      {
+        $push: { classStudents: student },
+      }
+    );
+    if (updateClasswithStudent.modifiedCount === 1) {
+      console.log("Student added into class");
+    } else {
+      console.log("Error in adding student into class");
+    }
   } catch (error) {
     res.status(500).json({ message: error.message, status: "error" });
   }
