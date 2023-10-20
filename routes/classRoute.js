@@ -11,7 +11,28 @@ router.get("/", async (req, res) => {
     res.status(400).json({ message: error.message, status: "error" });
   }
 });
-
+// code to get classes with id
+router.get("/getclassbystudent/:id", async (req, res) => {
+  try {
+    const classbyId = await classSchema
+      .findById(req.params.id)
+      .populate([{ path: "classStudents" }]);
+    res.json(classbyId);
+  } catch (error) {
+    res.status(400).json({ message: error.message, status: "error" });
+  }
+});
+// // code to get classes with classID
+// router.get("/getclassbystudent/:classID", async (req, res) => {
+//   try {
+//     const classbyId = await classSchema
+//       .findById(req.params.classID)
+//       .populate([{ path: "classStudents" }]);
+//     res.json(classbyId);
+//   } catch (error) {
+//     res.status(400).json({ message: error.message, status: "error" });
+//   }
+// });
 // code to get classes with there students
 router.get("/getclassbystudent", async (req, res) => {
   try {
