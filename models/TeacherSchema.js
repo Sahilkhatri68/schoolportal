@@ -9,6 +9,10 @@ const teacherschema = new mongoose.Schema({
     type: String,
     require: true,
   },
+  teacherPhone: {
+    type: String,
+    require: true,
+  },
   teacheremial: {
     type: String,
     require: true,
@@ -31,6 +35,10 @@ const teacherschema = new mongoose.Schema({
       ref: "classSchema",
     },
   ],
+  teacherKeyId: {
+    type: String,
+    require: true,
+  },
   joindate: {
     type: Date,
     default: Date.now,
