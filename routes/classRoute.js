@@ -38,6 +38,9 @@ router.get("/getclassbystudent", async (req, res) => {
   try {
     const classfindstd = await classSchema.find().populate([
       {
+        path: "classAssignedTeachers",
+      },
+      {
         path: "classStudents",
       },
     ]);
